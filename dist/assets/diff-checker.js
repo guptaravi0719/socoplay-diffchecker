@@ -14,6 +14,9 @@
   const editorStage = document.querySelector('#editor-stage');
   const results = document.querySelector('#result-section');
   const output = document.querySelector('#diff-output');
+  const columnHeadings = document.querySelector('#diff-column-headings');
+  const splitLayout = document.querySelector('#split-layout');
+  const unifiedLayout = document.querySelector('#unified-layout');
   const summary = document.querySelector('#summary');
   const example = [
     'A good comparison tool should be quick and easy to use.',
@@ -60,7 +63,7 @@
     return actions.reverse();
   };
   const renderCell = (lineNumber, text, type) => `<div class="diff-cell ${type ? `${type}-cell` : 'same-cell'}"><span class="line-number">${lineNumber || ''}</span><span class="line-text${text === '' ? ' empty' : ''}">${text === '' ? ' ' : escapeHtml(text)}</span></div>`;
-  const compare = () => {
+  const compare = ({ moveToDiff = false } = {}) => {
     message.textContent = '';
     if (!before.value.trim() && !after.value.trim()) { message.textContent = 'Add text to at least one box to compare.'; before.focus(); return; }
     const first = before.value.replace(/\r\n/g, '\n').split('\n');
@@ -90,27 +93,42 @@
     const same = actions.filter((action) => action.type === 'same').length;
     summary.innerHTML = `<span class="same">${same} unchanged line${same === 1 ? '' : 's'}</span><span class="removed">− ${removed} removed</span><span class="added">+ ${added} added</span>`;
     output.innerHTML = rows.join('');
+    resultIgnoreSpace.checked = ignoreSpace.checked;
+    resultIgnoreCase.checked = ignoreCase.checked;
     results.hidden = false;
-    editorStage.hidden = true;
+    workspace.prepend(results);
     workspace.classList.add('is-comparing');
-    requestAnimationFrame(() => {
-      const top = workspace.getBoundingClientRect().top + window.scrollY - 70;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    if (moveToDiff) requestAnimationFrame(() => {
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
       output.focus({ preventScroll: true });
     });
   };
   document.querySelectorAll('textarea').forEach((area) => area.addEventListener('input', updateCounts));
-  document.querySelector('#compare').addEventListener('click', compare);
+  document.querySelector('#compare').addEventListener('click', () => compare({ moveToDiff: true }));
   document.querySelector('#swap').addEventListener('click', () => { const current = before.value; before.value = after.value; after.value = current; updateCounts(); });
   document.querySelectorAll('.clear-editor').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = ''; target.focus(); updateCounts(); }));
   document.querySelectorAll('.example-button').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = (button.dataset.target === 'before' ? example : revision).join('\n'); updateCounts(); target.focus(); }));
-  document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; editorStage.hidden = false; workspace.classList.remove('is-comparing'); message.textContent = ''; updateCounts(); before.focus(); });
-  document.querySelector('#new-comparison').addEventListener('click', () => { results.hidden = true; editorStage.hidden = false; workspace.classList.remove('is-comparing'); before.focus(); });
+  document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; workspace.classList.remove('is-comparing'); message.textContent = ''; updateCounts(); before.focus(); });
+  document.querySelector('#new-comparison').addEventListener('click', () => { editorStage.scrollIntoView({ behavior: 'smooth', block: 'start' }); requestAnimationFrame(() => before.focus({ preventScroll: true })); });
   hideUnchanged.addEventListener('change', () => output.classList.toggle('hide-unchanged', hideUnchanged.checked));
   disableWrap.addEventListener('change', () => output.classList.toggle('disable-wrap', disableWrap.checked));
   resultIgnoreSpace.addEventListener('change', () => { ignoreSpace.checked = resultIgnoreSpace.checked; compare(); });
   resultIgnoreCase.addEventListener('change', () => { ignoreCase.checked = resultIgnoreCase.checked; compare(); });
-  document.querySelector('#first-change').addEventListener('click', () => output.querySelector('.changed-row')?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+  const setLayout = (layout) => {
+    const unified = layout === 'unified';
+    output.classList.toggle('unified', unified);
+    columnHeadings.classList.toggle('unified', unified);
+    splitLayout.classList.toggle('is-selected', !unified);
+    unifiedLayout.classList.toggle('is-selected', unified);
+    splitLayout.setAttribute('aria-pressed', String(!unified));
+    unifiedLayout.setAttribute('aria-pressed', String(unified));
+  };
+  splitLayout.addEventListener('click', () => setLayout('split'));
+  unifiedLayout.addEventListener('click', () => setLayout('unified'));
+  document.querySelector('#first-change').addEventListener('click', () => {
+    const firstChange = output.querySelector('.changed-row');
+    if (firstChange) output.scrollTo({ top: Math.max(0, firstChange.offsetTop - 80), behavior: 'smooth' });
+  });
   document.querySelector('#copy-result').addEventListener('click', async (event) => { const text = summary.textContent.replace(/\s+/g, ' ').trim(); try { await navigator.clipboard.writeText(`SocoTools Diff Checker: ${text}`); event.currentTarget.textContent = 'Copied!'; setTimeout(() => { event.currentTarget.textContent = 'Copy summary'; }, 1300); } catch { event.currentTarget.textContent = 'Copy unavailable'; } });
   updateCounts();
 })();

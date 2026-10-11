@@ -48,10 +48,10 @@
 
         <section id="result-section" class="result-section comparison-stage" hidden aria-live="polite">
           <aside class="diff-sidebar" aria-label="Diff display tools">
-            <div class="side-tabs"><button type="button" class="side-tab is-selected">Tools</button><button type="button" class="side-tab" disabled>History</button></div>
+            <div class="side-tabs"><span class="side-tab is-selected">Review tools</span></div>
             <section class="side-section">
               <p>Layout</p>
-              <div class="segmented"><button type="button" class="is-selected">Split</button><button type="button" disabled>Unified</button></div>
+              <div class="segmented"><button id="split-layout" type="button" class="is-selected" aria-pressed="true">Split</button><button id="unified-layout" type="button" aria-pressed="false">Unified</button></div>
             </section>
             <section class="side-section controls">
               <label><span>Hide unchanged lines</span><input id="hide-unchanged" type="checkbox" /></label>
@@ -69,7 +69,7 @@
               <div><h2>Untitled comparison</h2><div id="summary" class="summary" aria-label="Comparison summary"></div></div>
               <div class="result-actions"><button class="secondary-button" id="copy-result" type="button">Copy summary</button></div>
             </div>
-            <div class="diff-column-headings"><span>Original text</span><span>Changed text</span></div>
+            <div id="diff-column-headings" class="diff-column-headings"><span>Original text</span><span>Changed text</span></div>
             <div class="legend"><span><b class="removed-dot"></b> Removed</span><span><b class="added-dot"></b> Added</span><span><b class="same-dot"></b> Unchanged</span></div>
             <div id="diff-output" class="diff-output" aria-label="Side by side differences" tabindex="-1"></div>
           </div>
