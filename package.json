@@ -1,0 +1,9 @@
+{
+  "name": "socoplay-diffchecker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node -e \"console.log('Static SocoTools site ready')\"",
+    "test": "node --test tests/site.test.mjs"
+  }
+}
