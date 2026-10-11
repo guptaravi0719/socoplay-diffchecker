@@ -6,7 +6,7 @@ import { promisify } from 'node:util';
 
 const run = promisify(execFile);
 
-test('ships an original SocoTools Diff Checker at its subpath', async () => {
+test('ships an original SocoPlay.tools Diff Checker at its subpath', async () => {
   const page = await readFile(new URL('../diff-checker/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../assets/diff-checker.js', import.meta.url), 'utf8');
   assert.match(page, /Compare text/);

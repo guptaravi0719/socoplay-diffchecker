@@ -1,4 +1,4 @@
-# SocoTools Diff Checker
+# SocoPlay.tools Diff Checker
 
 An original, browser-only text comparison tool for `tools.socoplay.com/diff-checker`.
 
