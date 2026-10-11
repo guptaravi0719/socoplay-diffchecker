@@ -11,6 +11,7 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   const script = await readFile(new URL('../assets/diff-checker.js', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../assets/styles.css', import.meta.url), 'utf8');
   assert.match(page, /Compare changes/);
+  assert.match(page, /socoplay-mark\.svg/);
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
   assert.match(page, /comparison-stage/);
@@ -27,6 +28,7 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
 test('builds a clean deployable directory instead of serving the repository root', async () => {
   await run(process.execPath, ['scripts/build.mjs']);
   await access(new URL('../dist/diff-checker/index.html', import.meta.url));
+  await access(new URL('../dist/assets/socoplay-mark.svg', import.meta.url));
   const configuration = await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8');
   assert.match(configuration, /"directory": "\.\/dist"/);
 });
