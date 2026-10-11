@@ -12,6 +12,9 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   const styles = await readFile(new URL('../assets/styles.css', import.meta.url), 'utf8');
   assert.match(page, /Find difference/);
   assert.match(page, /socoplay-mark\.svg/);
+  assert.match(page, /google-adsense-account/);
+  assert.match(page, /pagead2\.googlesyndication\.com/);
+  assert.match(page, /canonical/);
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
   assert.match(page, /comparison-stage/);
@@ -29,6 +32,12 @@ test('builds a clean deployable directory instead of serving the repository root
   await run(process.execPath, ['scripts/build.mjs']);
   await access(new URL('../dist/diff-checker/index.html', import.meta.url));
   await access(new URL('../dist/assets/socoplay-mark.svg', import.meta.url));
+  await access(new URL('../dist/ads.txt', import.meta.url));
+  await access(new URL('../dist/robots.txt', import.meta.url));
+  await access(new URL('../dist/sitemap.xml', import.meta.url));
+  await access(new URL('../dist/privacy/index.html', import.meta.url));
+  const adsTxt = await readFile(new URL('../ads.txt', import.meta.url), 'utf8');
+  assert.match(adsTxt, /pub-5695136510723463/);
   const configuration = await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8');
   assert.match(configuration, /"directory": "\.\/dist"/);
 });
