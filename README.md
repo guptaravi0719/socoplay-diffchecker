@@ -10,4 +10,4 @@ Create a new Cloudflare Pages project from this GitHub repository and configure:
 - Build command: `npm run build`
 - Build output directory: `.`
 
-Then add `tools.socoplay.com` in **Custom domains**. Cloudflare Pages serves the checker at `/diff-checker/`.
+Then add `tools.socoplay.com` in **Custom domains**. Cloudflare Pages serves the checker at `/diff-checker/` (and redirects `/diff-checker` there automatically).
