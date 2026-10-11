@@ -10,7 +10,6 @@
   const hideUnchanged = document.querySelector('#hide-unchanged');
   const disableWrap = document.querySelector('#disable-wrap');
   const message = document.querySelector('#input-message');
-  const workspace = document.querySelector('#workspace');
   const editorStage = document.querySelector('#editor-stage');
   const results = document.querySelector('#result-section');
   const output = document.querySelector('#diff-output');
@@ -96,8 +95,6 @@
     resultIgnoreSpace.checked = ignoreSpace.checked;
     resultIgnoreCase.checked = ignoreCase.checked;
     results.hidden = false;
-    workspace.prepend(results);
-    workspace.classList.add('is-comparing');
     if (moveToDiff) requestAnimationFrame(() => {
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
       output.focus({ preventScroll: true });
@@ -108,7 +105,7 @@
   document.querySelector('#swap').addEventListener('click', () => { const current = before.value; before.value = after.value; after.value = current; updateCounts(); });
   document.querySelectorAll('.clear-editor').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = ''; target.focus(); updateCounts(); }));
   document.querySelectorAll('.example-button').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = (button.dataset.target === 'before' ? example : revision).join('\n'); updateCounts(); target.focus(); }));
-  document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; workspace.classList.remove('is-comparing'); message.textContent = ''; updateCounts(); before.focus(); });
+  document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; message.textContent = ''; updateCounts(); before.focus(); });
   document.querySelector('#new-comparison').addEventListener('click', () => { editorStage.scrollIntoView({ behavior: 'smooth', block: 'start' }); requestAnimationFrame(() => before.focus({ preventScroll: true })); });
   hideUnchanged.addEventListener('change', () => output.classList.toggle('hide-unchanged', hideUnchanged.checked));
   disableWrap.addEventListener('change', () => output.classList.toggle('disable-wrap', disableWrap.checked));
