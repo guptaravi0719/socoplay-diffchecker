@@ -16,7 +16,7 @@
 
     <main class="tool-shell simple-tool-shell">
       <div class="tool-titlebar">
-        <div><h1>Compare text</h1><p>Paste two versions to find the differences.</p></div>
+        <div><h1>Compare changes</h1><p>Paste two versions to see what changed.</p></div>
         <div class="options">
           <label><input id="ignore-space" type="checkbox" /> Ignore spaces</label>
           <label><input id="ignore-case" type="checkbox" /> Ignore case</label>
@@ -41,14 +41,14 @@
 
           <div class="compare-row">
             <button class="secondary-button" id="clear-all" type="button">Clear all</button>
-            <button class="primary-button" id="compare" type="button">Find differences</button>
+            <button class="primary-button" id="compare" type="button">Compare changes</button>
             <p id="input-message" class="input-message" aria-live="polite"></p>
           </div>
         </div>
 
         <section id="result-section" class="result-section comparison-stage" hidden aria-live="polite">
           <div class="result-head">
-            <div><h2>Differences</h2><div id="summary" class="summary" aria-label="Comparison summary"></div></div>
+            <div><h2>Changed files</h2><div id="summary" class="summary" aria-label="Comparison summary"></div></div>
             <div class="result-actions"><button class="secondary-button" id="copy-result" type="button">Copy summary</button><button class="primary-button" id="new-comparison" type="button">Edit text</button></div>
           </div>
           <div class="legend"><span><b class="removed-dot"></b> Original</span><span><b class="added-dot"></b> Changed</span><span><b class="same-dot"></b> Same</span></div>

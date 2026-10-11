@@ -9,7 +9,7 @@ const run = promisify(execFile);
 test('ships an original SocoPlay.tools Diff Checker at its subpath', async () => {
   const page = await readFile(new URL('../diff-checker/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../assets/diff-checker.js', import.meta.url), 'utf8');
-  assert.match(page, /Compare text/);
+  assert.match(page, /Compare changes/);
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
   assert.match(page, /comparison-stage/);
