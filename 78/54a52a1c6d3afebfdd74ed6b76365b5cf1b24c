@@ -1,0 +1,25 @@
+diff-checker/index.html
+  s_faa544299a2048::t_ec9cc91fe97d81 79
+assets/styles.css
+  s_faa544299a2048::t_ec9cc91fe97d81 21
+dist/assets/styles.css
+  s_faa544299a2048::t_d2a2977c5b0a67 4,21,26
+dist/diff-checker/index.html
+  s_faa544299a2048::t_3b5d12c0a5056f 79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "7854a52a1c6d3afebfdd74ed6b76365b5cf1b24c",
+  "prompts": {},
+  "sessions": {
+    "s_faa544299a2048": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12453-faaa-7281-8546-e3ded514ecd6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "guptaravi0719 <guptaravi0719@gmail.com>"
+    }
+  }
+}
