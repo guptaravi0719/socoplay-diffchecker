@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+
+const run = promisify(execFile);
 
 test('ships an original SocoTools Diff Checker at its subpath', async () => {
   const page = await readFile(new URL('../diff-checker/index.html', import.meta.url), 'utf8');
@@ -10,4 +14,11 @@ test('ships an original SocoTools Diff Checker at its subpath', async () => {
   assert.match(page, /Revised/);
   assert.match(script, /makeLcs/);
   assert.match(script, /clipboard/);
+});
+
+test('builds a clean deployable directory instead of serving the repository root', async () => {
+  await run(process.execPath, ['scripts/build.mjs']);
+  await access(new URL('../dist/diff-checker/index.html', import.meta.url));
+  const configuration = await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8');
+  assert.match(configuration, /"directory": "\.\/dist"/);
 });

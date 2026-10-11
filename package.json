@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node -e \"console.log('Static SocoTools site ready')\"",
+    "build": "node scripts/build.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev",
     "test": "node --test tests/site.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.50.0"
   }
 }
