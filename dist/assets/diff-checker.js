@@ -93,6 +93,11 @@
     results.hidden = false;
     editorStage.hidden = true;
     workspace.classList.add('is-comparing');
+    requestAnimationFrame(() => {
+      const top = workspace.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      output.focus({ preventScroll: true });
+    });
   };
   document.querySelectorAll('textarea').forEach((area) => area.addEventListener('input', updateCounts));
   document.querySelector('#compare').addEventListener('click', compare);
