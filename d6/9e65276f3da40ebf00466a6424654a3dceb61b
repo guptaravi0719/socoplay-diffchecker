@@ -1,0 +1,31 @@
+tests/site.test.mjs
+  s_faa544299a2048::t_f3b62d0948c01f 14,31
+index.html
+  s_faa544299a2048::t_554400bf2c2dbc 8-9
+assets/socoplay-mark.svg
+  s_faa544299a2048::t_554400bf2c2dbc 1-12
+diff-checker/index.html
+  s_faa544299a2048::t_554400bf2c2dbc 8-9
+dist/assets/socoplay-mark.svg
+  s_faa544299a2048::t_ab2f87d1bdba6c 1-12
+dist/diff-checker/index.html
+  s_faa544299a2048::t_97b9150083c5cd 8-9
+dist/index.html
+  s_faa544299a2048::t_5a4af76ac3846f 8-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "d69e65276f3da40ebf00466a6424654a3dceb61b",
+  "prompts": {},
+  "sessions": {
+    "s_faa544299a2048": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12453-faaa-7281-8546-e3ded514ecd6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "guptaravi0719 <guptaravi0719@gmail.com>"
+    }
+  }
+}
