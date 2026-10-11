@@ -10,7 +10,7 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   const page = await readFile(new URL('../diff-checker/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../assets/diff-checker.js', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../assets/styles.css', import.meta.url), 'utf8');
-  assert.match(page, /Compare changes/);
+  assert.match(page, /Find difference/);
   assert.match(page, /socoplay-mark\.svg/);
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
