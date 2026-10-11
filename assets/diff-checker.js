@@ -5,6 +5,10 @@
   const afterCount = document.querySelector('#after-count');
   const ignoreSpace = document.querySelector('#ignore-space');
   const ignoreCase = document.querySelector('#ignore-case');
+  const resultIgnoreSpace = document.querySelector('#result-ignore-space');
+  const resultIgnoreCase = document.querySelector('#result-ignore-case');
+  const hideUnchanged = document.querySelector('#hide-unchanged');
+  const disableWrap = document.querySelector('#disable-wrap');
   const message = document.querySelector('#input-message');
   const workspace = document.querySelector('#workspace');
   const editorStage = document.querySelector('#editor-stage');
@@ -70,7 +74,7 @@
     for (let position = 0; position < actions.length; ) {
       if (actions[position].type === 'same') {
         const action = actions[position]; originalLine += 1; revisedLine += 1;
-        rows.push(`<div class="diff-row">${renderCell(originalLine, first[action.first])}${renderCell(revisedLine, second[action.second])}</div>`);
+        rows.push(`<div class="diff-row same-row">${renderCell(originalLine, first[action.first])}${renderCell(revisedLine, second[action.second])}</div>`);
         position += 1; continue;
       }
       const removals = []; const additions = [];
@@ -80,7 +84,7 @@
         const remove = removals[index]; const add = additions[index];
         if (remove) { originalLine += 1; removed += 1; }
         if (add) { revisedLine += 1; added += 1; }
-        rows.push(`<div class="diff-row">${renderCell(remove ? originalLine : '', remove ? first[remove.first] : '', remove ? 'removed' : '')}${renderCell(add ? revisedLine : '', add ? second[add.second] : '', add ? 'added' : '')}</div>`);
+        rows.push(`<div class="diff-row changed-row">${renderCell(remove ? originalLine : '', remove ? first[remove.first] : '', remove ? 'removed' : '')}${renderCell(add ? revisedLine : '', add ? second[add.second] : '', add ? 'added' : '')}</div>`);
       }
     }
     const same = actions.filter((action) => action.type === 'same').length;
@@ -97,6 +101,11 @@
   document.querySelectorAll('.example-button').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = (button.dataset.target === 'before' ? example : revision).join('\n'); updateCounts(); target.focus(); }));
   document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; editorStage.hidden = false; workspace.classList.remove('is-comparing'); message.textContent = ''; updateCounts(); before.focus(); });
   document.querySelector('#new-comparison').addEventListener('click', () => { results.hidden = true; editorStage.hidden = false; workspace.classList.remove('is-comparing'); before.focus(); });
+  hideUnchanged.addEventListener('change', () => output.classList.toggle('hide-unchanged', hideUnchanged.checked));
+  disableWrap.addEventListener('change', () => output.classList.toggle('disable-wrap', disableWrap.checked));
+  resultIgnoreSpace.addEventListener('change', () => { ignoreSpace.checked = resultIgnoreSpace.checked; compare(); });
+  resultIgnoreCase.addEventListener('change', () => { ignoreCase.checked = resultIgnoreCase.checked; compare(); });
+  document.querySelector('#first-change').addEventListener('click', () => output.querySelector('.changed-row')?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
   document.querySelector('#copy-result').addEventListener('click', async (event) => { const text = summary.textContent.replace(/\s+/g, ' ').trim(); try { await navigator.clipboard.writeText(`SocoTools Diff Checker: ${text}`); event.currentTarget.textContent = 'Copied!'; setTimeout(() => { event.currentTarget.textContent = 'Copy summary'; }, 1300); } catch { event.currentTarget.textContent = 'Copy unavailable'; } });
   updateCounts();
 })();

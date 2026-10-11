@@ -47,12 +47,32 @@
         </div>
 
         <section id="result-section" class="result-section comparison-stage" hidden aria-live="polite">
-          <div class="result-head">
-            <div><h2>Changed files</h2><div id="summary" class="summary" aria-label="Comparison summary"></div></div>
-            <div class="result-actions"><button class="secondary-button" id="copy-result" type="button">Copy summary</button><button class="primary-button" id="new-comparison" type="button">Edit text</button></div>
+          <aside class="diff-sidebar" aria-label="Diff display tools">
+            <div class="side-tabs"><button type="button" class="side-tab is-selected">Tools</button><button type="button" class="side-tab" disabled>History</button></div>
+            <section class="side-section">
+              <p>Layout</p>
+              <div class="segmented"><button type="button" class="is-selected">Split</button><button type="button" disabled>Unified</button></div>
+            </section>
+            <section class="side-section controls">
+              <label><span>Hide unchanged lines</span><input id="hide-unchanged" type="checkbox" /></label>
+              <label><span>Disable line wrap</span><input id="disable-wrap" type="checkbox" /></label>
+              <label><span>Ignore spaces</span><input id="result-ignore-space" type="checkbox" /></label>
+              <label><span>Ignore case</span><input id="result-ignore-case" type="checkbox" /></label>
+            </section>
+            <div class="side-actions">
+              <button id="first-change" type="button">◎ Go to first change</button>
+              <button id="new-comparison" type="button">✎ Edit input</button>
+            </div>
+          </aside>
+          <div class="diff-review">
+            <div class="result-head">
+              <div><h2>Untitled comparison</h2><div id="summary" class="summary" aria-label="Comparison summary"></div></div>
+              <div class="result-actions"><button class="secondary-button" id="copy-result" type="button">Copy summary</button></div>
+            </div>
+            <div class="diff-column-headings"><span>Original text</span><span>Changed text</span></div>
+            <div class="legend"><span><b class="removed-dot"></b> Removed</span><span><b class="added-dot"></b> Added</span><span><b class="same-dot"></b> Unchanged</span></div>
+            <div id="diff-output" class="diff-output" aria-label="Side by side differences"></div>
           </div>
-          <div class="legend"><span><b class="removed-dot"></b> Original</span><span><b class="added-dot"></b> Changed</span><span><b class="same-dot"></b> Same</span></div>
-          <div id="diff-output" class="diff-output" aria-label="Side by side differences"></div>
         </section>
       </section>
     </main>

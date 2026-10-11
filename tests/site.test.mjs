@@ -13,7 +13,9 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
   assert.match(page, /comparison-stage/);
+  assert.match(page, /hide-unchanged/);
   assert.match(script, /makeLcs/);
+  assert.match(script, /first-change/);
   assert.match(script, /clipboard/);
 });
 
