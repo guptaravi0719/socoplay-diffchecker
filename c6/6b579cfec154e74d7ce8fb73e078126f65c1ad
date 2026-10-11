@@ -1,0 +1,32 @@
+assets/styles.css
+  s_faa544299a2048::t_8363ac674285bf 37-40
+assets/diff-checker.js
+  s_faa544299a2048::t_16dfbae462c824 17-19,66,96-97,99,101-102,107,111-112,117-127
+  s_faa544299a2048::t_05645375f93abe 128-131
+diff-checker/index.html
+  s_faa544299a2048::t_16dfbae462c824 51,54,72
+tests/site.test.mjs
+  s_faa544299a2048::t_16dfbae462c824 17,20
+dist/assets/diff-checker.js
+  s_faa544299a2048::t_d0c610070f0e5c 17-19,66,96-97,99,101-102,107,111-112,117-131
+dist/assets/styles.css
+  s_faa544299a2048::t_f81f1b2eee0b55 37-40
+dist/diff-checker/index.html
+  s_faa544299a2048::t_b5b3eafb3c17c4 51,54,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "c66b579cfec154e74d7ce8fb73e078126f65c1ad",
+  "prompts": {},
+  "sessions": {
+    "s_faa544299a2048": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12453-faaa-7281-8546-e3ded514ecd6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "guptaravi0719 <guptaravi0719@gmail.com>"
+    }
+  }
+}
