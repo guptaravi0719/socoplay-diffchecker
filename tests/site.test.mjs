@@ -15,6 +15,10 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   assert.match(page, /google-adsense-account/);
   assert.match(page, /pagead2\.googlesyndication\.com/);
   assert.match(page, /canonical/);
+  assert.match(page, /og:title/);
+  assert.match(page, /application\/ld\+json/);
+  assert.match(page, /WebApplication/);
+  assert.match(page, /G-TXS9H43TXZ/);
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
   assert.match(page, /comparison-stage/);
@@ -37,7 +41,9 @@ test('builds a clean deployable directory instead of serving the repository root
   await access(new URL('../dist/sitemap.xml', import.meta.url));
   await access(new URL('../dist/privacy/index.html', import.meta.url));
   const adsTxt = await readFile(new URL('../ads.txt', import.meta.url), 'utf8');
+  const sitemap = await readFile(new URL('../sitemap.xml', import.meta.url), 'utf8');
   assert.match(adsTxt, /pub-5695136510723463/);
+  assert.match(sitemap, /<lastmod>2026-10-11<\/lastmod>/);
   const configuration = await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8');
   assert.match(configuration, /"directory": "\.\/dist"/);
 });
