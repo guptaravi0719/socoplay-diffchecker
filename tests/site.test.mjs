@@ -9,6 +9,7 @@ const run = promisify(execFile);
 test('ships an original SocoPlay.tools Diff Checker at its subpath', async () => {
   const page = await readFile(new URL('../diff-checker/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../assets/diff-checker.js', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../assets/styles.css', import.meta.url), 'utf8');
   assert.match(page, /Compare changes/);
   assert.match(page, /Original text/);
   assert.match(page, /Changed text/);
@@ -18,6 +19,7 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   assert.match(script, /makeLcs/);
   assert.match(script, /first-change/);
   assert.match(script, /setLayout/);
+  assert.match(styles, /grid-template-rows:50px 32px minmax\(0,1fr\)/);
   assert.match(script, /clipboard/);
 });
 
