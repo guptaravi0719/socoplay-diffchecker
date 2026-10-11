@@ -6,6 +6,8 @@
   const ignoreSpace = document.querySelector('#ignore-space');
   const ignoreCase = document.querySelector('#ignore-case');
   const message = document.querySelector('#input-message');
+  const workspace = document.querySelector('#workspace');
+  const editorStage = document.querySelector('#editor-stage');
   const results = document.querySelector('#result-section');
   const output = document.querySelector('#diff-output');
   const summary = document.querySelector('#summary');
@@ -85,15 +87,16 @@
     summary.innerHTML = `<span class="same">${same} unchanged line${same === 1 ? '' : 's'}</span><span class="removed">− ${removed} removed</span><span class="added">+ ${added} added</span>`;
     output.innerHTML = rows.join('');
     results.hidden = false;
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    editorStage.hidden = true;
+    workspace.classList.add('is-comparing');
   };
   document.querySelectorAll('textarea').forEach((area) => area.addEventListener('input', updateCounts));
   document.querySelector('#compare').addEventListener('click', compare);
   document.querySelector('#swap').addEventListener('click', () => { const current = before.value; before.value = after.value; after.value = current; updateCounts(); });
   document.querySelectorAll('.clear-editor').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = ''; target.focus(); updateCounts(); }));
   document.querySelectorAll('.example-button').forEach((button) => button.addEventListener('click', () => { const target = button.dataset.target === 'before' ? before : after; target.value = (button.dataset.target === 'before' ? example : revision).join('\n'); updateCounts(); target.focus(); }));
-  document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; message.textContent = ''; updateCounts(); before.focus(); });
-  document.querySelector('#new-comparison').addEventListener('click', () => { results.hidden = true; before.focus(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  document.querySelector('#clear-all').addEventListener('click', () => { before.value = ''; after.value = ''; results.hidden = true; editorStage.hidden = false; workspace.classList.remove('is-comparing'); message.textContent = ''; updateCounts(); before.focus(); });
+  document.querySelector('#new-comparison').addEventListener('click', () => { results.hidden = true; editorStage.hidden = false; workspace.classList.remove('is-comparing'); before.focus(); });
   document.querySelector('#copy-result').addEventListener('click', async (event) => { const text = summary.textContent.replace(/\s+/g, ' ').trim(); try { await navigator.clipboard.writeText(`SocoTools Diff Checker: ${text}`); event.currentTarget.textContent = 'Copied!'; setTimeout(() => { event.currentTarget.textContent = 'Copy summary'; }, 1300); } catch { event.currentTarget.textContent = 'Copy unavailable'; } });
   updateCounts();
 })();

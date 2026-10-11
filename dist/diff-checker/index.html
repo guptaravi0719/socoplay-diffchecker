@@ -14,63 +14,49 @@
       <a class="games-link" href="https://socoplay.com">Play games <span aria-hidden="true">↗</span></a>
     </header>
 
-    <main class="tool-shell">
-      <section class="tool-intro">
-        <a class="crumb" href="/">‹ All tools</a>
-        <p class="eyebrow">TEXT COMPARISON</p>
-        <h1>Diff Checker</h1>
-        <p>Paste two versions of text, code, or a document to see exactly what changed.</p>
-      </section>
+    <main class="tool-shell simple-tool-shell">
+      <div class="tool-titlebar">
+        <div><h1>Compare text</h1><p>Paste two versions to find the differences.</p></div>
+        <div class="options">
+          <label><input id="ignore-space" type="checkbox" /> Ignore spaces</label>
+          <label><input id="ignore-case" type="checkbox" /> Ignore case</label>
+        </div>
+      </div>
 
-      <section class="workspace" aria-label="Diff checker workspace">
-        <div class="workspace-bar">
-          <div class="mode-tabs" role="tablist" aria-label="Comparison mode">
-            <button class="mode-tab is-selected" type="button" role="tab" aria-selected="true">Text</button>
-            <button class="mode-tab" type="button" role="tab" aria-selected="false" disabled title="File comparison is coming soon">Files <span>soon</span></button>
+      <section id="workspace" class="workspace simple-workspace" aria-label="Diff checker workspace">
+        <div id="editor-stage" class="editor-stage">
+          <div class="editors" id="editors">
+            <article class="editor-card editor-before">
+              <div class="editor-head"><span><i></i> Original text</span><button class="text-button clear-editor" data-target="before" type="button">Clear</button></div>
+              <textarea id="before-text" aria-label="Original text" spellcheck="false" placeholder="Paste the original text here…"></textarea>
+              <div class="editor-foot"><span id="before-count">0 characters</span><button class="text-button example-button" data-target="before" type="button">Try example</button></div>
+            </article>
+            <button class="swap-button" id="swap" type="button" aria-label="Swap original and revised text" title="Swap texts">⇄</button>
+            <article class="editor-card editor-after">
+              <div class="editor-head"><span><i></i> Changed text</span><button class="text-button clear-editor" data-target="after" type="button">Clear</button></div>
+              <textarea id="after-text" aria-label="Changed text" spellcheck="false" placeholder="Paste the changed text here…"></textarea>
+              <div class="editor-foot"><span id="after-count">0 characters</span><button class="text-button example-button" data-target="after" type="button">Try example</button></div>
+            </article>
           </div>
-          <div class="options">
-            <label><input id="ignore-space" type="checkbox" /> Ignore spaces</label>
-            <label><input id="ignore-case" type="checkbox" /> Ignore case</label>
+
+          <div class="compare-row">
+            <button class="secondary-button" id="clear-all" type="button">Clear all</button>
+            <button class="primary-button" id="compare" type="button">Find differences</button>
+            <p id="input-message" class="input-message" aria-live="polite"></p>
           </div>
         </div>
 
-        <div class="editors" id="editors">
-          <article class="editor-card editor-before">
-            <div class="editor-head"><span><i></i> Original</span><button class="text-button clear-editor" data-target="before" type="button">Clear</button></div>
-            <textarea id="before-text" aria-label="Original text" spellcheck="false" placeholder="Paste the original text here…"></textarea>
-            <div class="editor-foot"><span id="before-count">0 characters</span><button class="text-button example-button" data-target="before" type="button">Use example</button></div>
-          </article>
-          <button class="swap-button" id="swap" type="button" aria-label="Swap original and revised text" title="Swap texts">⇄</button>
-          <article class="editor-card editor-after">
-            <div class="editor-head"><span><i></i> Revised</span><button class="text-button clear-editor" data-target="after" type="button">Clear</button></div>
-            <textarea id="after-text" aria-label="Revised text" spellcheck="false" placeholder="Paste the revised text here…"></textarea>
-            <div class="editor-foot"><span id="after-count">0 characters</span><button class="text-button example-button" data-target="after" type="button">Use example</button></div>
-          </article>
-        </div>
-
-        <div class="compare-row">
-          <button class="primary-button" id="compare" type="button"><span aria-hidden="true">⌁</span> Compare texts</button>
-          <button class="secondary-button" id="clear-all" type="button">Reset all</button>
-          <p id="input-message" class="input-message" aria-live="polite"></p>
-        </div>
-      </section>
-
-      <section id="result-section" class="result-section" hidden aria-live="polite">
-        <div class="result-head">
-          <div><p class="eyebrow">RESULT</p><h2>Your changes</h2></div>
-          <div class="result-actions"><button class="secondary-button" id="copy-result" type="button">Copy summary</button><button class="secondary-button" id="new-comparison" type="button">New comparison</button></div>
-        </div>
-        <div id="summary" class="summary" aria-label="Comparison summary"></div>
-        <div class="legend"><span><b class="removed-dot"></b> Removed / original</span><span><b class="added-dot"></b> Added / revised</span><span><b class="same-dot"></b> Unchanged</span></div>
-        <div id="diff-output" class="diff-output" aria-label="Side by side differences"></div>
-      </section>
-
-      <section class="about-tool">
-        <div class="about-icon">✦</div>
-        <div><h2>Private by design</h2><p>Your text is compared in this browser. Nothing is uploaded or stored by SocoTools.</p></div>
+        <section id="result-section" class="result-section comparison-stage" hidden aria-live="polite">
+          <div class="result-head">
+            <div><h2>Differences</h2><div id="summary" class="summary" aria-label="Comparison summary"></div></div>
+            <div class="result-actions"><button class="secondary-button" id="copy-result" type="button">Copy summary</button><button class="primary-button" id="new-comparison" type="button">Edit text</button></div>
+          </div>
+          <div class="legend"><span><b class="removed-dot"></b> Original</span><span><b class="added-dot"></b> Changed</span><span><b class="same-dot"></b> Same</span></div>
+          <div id="diff-output" class="diff-output" aria-label="Side by side differences"></div>
+        </section>
       </section>
     </main>
-    <footer>Built by <a href="https://socoplay.com">SocoPlay</a> · Your text stays on your device.</footer>
+    <footer>Text is compared in your browser.</footer>
     <script src="/assets/diff-checker.js"></script>
   </body>
 </html>
