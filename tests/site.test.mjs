@@ -13,6 +13,7 @@ test('ships an original SocoPlay.tools Diff Checker at its subpath', async () =>
   assert.match(page, /Find difference/);
   assert.match(page, /socoplay-mark\.svg/);
   assert.match(page, /google-adsense-account/);
+  assert.match(page, /msvalidate\.01.*DDA661724504D4A545AED11D60818082/);
   assert.match(page, /pagead2\.googlesyndication\.com/);
   assert.match(page, /canonical/);
   assert.match(page, /og:title/);
